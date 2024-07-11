@@ -1,10 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
 import { useEffect, useReducer, useState } from 'react';
 import { CounterRedux } from './features/CounterRedux/Counter';
 import Counter from './features/CounterReducer/Counter';
+import Messenger from './features/messenger/messenger'
 
-function App({ app }) {
+// function App({ app }) {
+export default function App() {
   const [what, setWhat] = useState('Sasha');
   const [checked, setChecked] = useReducer((checked) => !checked, false)
   useEffect(() => {
@@ -27,14 +28,14 @@ function App({ app }) {
   let initialState = 0;
 
   const reducer = (state, action) => {
-    switch (action.type){
-      case 'increment':{
+    switch (action.type) {
+      case 'increment': {
         return state + action.payload
       }
-      case 'decrement':{
+      case 'decrement': {
         return state - action.payload
       }
-      case 'reset':{
+      case 'reset': {
         return initialState
       }
       default:
@@ -50,6 +51,7 @@ function App({ app }) {
       <CounterRedux />
       <Counter counter={counter} dispatch={dispatch} />
       <br />
+      <Messenger/>
       <div>Hello {what}</div>
       <button onClick={() => setWhat('Sneha')}>Sneha</button>
       <button onClick={() => setWhat('Vinay')}>Vinay</button>
@@ -59,5 +61,3 @@ function App({ app }) {
     </div>
   );
 }
-
-export default App;

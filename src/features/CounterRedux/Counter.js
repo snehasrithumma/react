@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './Counter.module.css';
 import { increment, decrement, reset, selectCount, increaseByAmount, addasync } from './counterslice';
 
 export function CounterRedux() {
     const dispatch = useDispatch();
-    const count = useSelector(state => state.counter.value)
-    const [incrementAmount, setIncrementAmount] = useState('10')
+    const count = useSelector(selectCount) //state => state.counter.value
     return (
         <div>
             <div className={styles.row}>

@@ -30,6 +30,6 @@ export const addasync = (amount) => (dispatch) => {
     }, 1000)
 }
 
-// export const selectCount = (state) => state.counter.value
+export const selectCount = (state) => state.counter.value
 
 export default counterSlice.reducer
