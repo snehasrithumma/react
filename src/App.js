@@ -46,6 +46,35 @@ export default function App() {
 
   const [counter, dispatch] = useReducer(reducer, initialState)
 
+
+  const posts = [{title:'post one', body: 'This is post one'},{title:'post Two', body: 'This is post two'}]
+
+  function getPosts(){
+    let output = '';
+    posts.forEach((post, index)=>{
+      output += `<li>${post.title}</li>`
+    })
+    document.getElementById('hello').innerHTML = output;
+  }
+
+  function createPosts(post){
+    return new Promise((resolve, reject)=>{
+      setTimeout(()=>{
+        posts.push(post);
+        resolve();
+      },2000)
+    })
+  }
+
+  async function call() {
+    await createPosts({title:'post 3', body: 'This is post 3'})
+    console.log(posts)
+    getPosts()
+  }
+
+
+  call()
+
   return (
     <div className="App">
       <CounterRedux />
@@ -58,6 +87,8 @@ export default function App() {
 
       <input type="checkbox" value={checked} onChange={setChecked} />
       <label>{checked ? "Checked" : "Not Checked"}</label>
+
+      <div id='hello'></div>
     </div>
   );
 }
