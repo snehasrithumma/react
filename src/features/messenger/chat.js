@@ -1,6 +1,5 @@
-import { useState } from 'react';
 
-export default function Chat({contact, message, dispatch}) {
+export default function Chat({ contact, message, dispatch }) {
   return (
     <section className="chat">
       <textarea
