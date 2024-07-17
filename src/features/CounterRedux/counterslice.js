@@ -1,3 +1,4 @@
+import React from 'react';
 import { createSlice } from '@reduxjs/toolkit';
 
 
@@ -16,7 +17,7 @@ export const counterSlice = createSlice({
         reset: (state) => {
             state.value = 0
         },
-        increaseByAmount : (state, action) =>{
+        increaseByAmount: (state, action) => {
             state.value += action.payload
         }
     }
@@ -25,7 +26,7 @@ export const counterSlice = createSlice({
 export const { increment, decrement, reset, increaseByAmount } = counterSlice.actions
 
 export const addasync = (amount) => (dispatch) => {
-    setTimeout(()=>{
+    setTimeout(() => {
         dispatch(increaseByAmount(amount))
     }, 1000)
 }

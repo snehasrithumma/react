@@ -1,0 +1,15 @@
+Install Webpack and Dependencies:
+    npm install --save-dev webpack webpack-cli webpack-dev-server
+    npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react
+    npm install --save-dev html-webpack-plugin clean-webpack-plugin
+
+Create Webpack Configuration Files:
+    Create a webpack.config.js file in the root of your project.
+Create Babel Configuration File:
+    Create a .babelrc file in the root of your project.
+
+Update npm Scripts:
+    Modify the scripts section of your package.json to use Webpack commands.
+
+Ensure you have an index.html file in the public folder.
+    moved from public url to   <link rel="icon" href="favicon.ico" />

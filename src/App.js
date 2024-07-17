@@ -1,3 +1,4 @@
+import React from 'react';
 import AppRoute from './approute';
 
 // function App({ app }) {

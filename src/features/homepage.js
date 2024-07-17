@@ -1,3 +1,4 @@
+import React from 'react';
 import '../App.css';
 import { useEffect, useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
