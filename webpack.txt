@@ -13,3 +13,108 @@ Update npm Scripts:
 
 Ensure you have an index.html file in the public folder.
     moved from public url to   <link rel="icon" href="favicon.ico" />
+
+Takeaways:
+. had to add react imports in each file and updated index.html
+
+
+
+path: Node.js module that provides utilities for working with file and directory paths.
+HtmlWebpackPlugin: Plugin that simplifies the creation of HTML files to serve your webpack bundles.
+CleanWebpackPlugin: Plugin that removes/cleans the dist folder before each build, ensuring that only used files are generated.
+Module Export
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+    },
+entry: Entry point for the application. Webpack will start building the dependency graph from ./src/index.js.
+output: Configuration for the output of the build process.
+filename: Name of the output bundle file.
+path: Output directory (dist) where the bundled files will be saved.
+publicPath: Public URL of the output directory when referenced in a browser.
+Module Rules
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
+                },
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(png|svg|jpg|gif|ico)$/,
+                use: ['file-loader'],
+            },
+            {
+                test: /\.svg$/,
+                use: [
+                    {
+                        loader: 'svg-url-loader',
+                        options: {
+                            limit: 10000,
+                        },
+                    },
+                ],
+            }
+        ],
+    },
+module.rules: Array of rules that define how different file types should be processed.
+test: Regular expression to match file types.
+exclude: Excludes node_modules directory from being processed.
+use: Defines the loader and its options.
+babel-loader: Transpiles JavaScript and JSX files using Babel.
+style-loader and css-loader: Load and bundle CSS files.
+file-loader: Loads file assets like images.
+svg-url-loader: Loads SVG files and optionally inlines them if they are below a specified size (limit).
+Resolve
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+resolve.extensions: Array of file extensions that Webpack will resolve. This allows importing modules without needing to add their extensions.
+Plugins
+    plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, "public", "index.html"),
+            favicon: "./public/favicon.ico",
+            filename: "index.html",
+            manifest: "./public/manifest.json",
+        })
+    ],
+CleanWebpackPlugin: Cleans the output directory (dist) before each build.
+HtmlWebpackPlugin: Generates an HTML file to include the webpack bundles.
+template: Template HTML file to use.
+favicon: Path to the favicon file.
+filename: Output HTML file name.
+manifest: Path to the manifest file.
+DevServer
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'public'),
+        },
+        compress: true,
+        port: 9000,
+        historyApiFallback: true,
+    },
+devServer: Configuration for the webpack-dev-server.
+static.directory: Directory to serve static files from (public).
+compress: Enables gzip compression for everything served.
+port: Port number for the dev server.
+historyApiFallback: Fallback to index.html for Single Page Applications (SPA) to handle routing via client-side code.
+Mode
+javascript
+Copy code
+    mode: 'development',
+};
+mode: Mode in which Webpack should run, which can be 'development', 'production', or 'none'. This affects optimizations and performance.

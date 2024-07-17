@@ -39,7 +39,7 @@ module.exports = {
                         },
                     },
                 ],
-            }
+            },
         ],
     },
     resolve: {
@@ -48,19 +48,10 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, "public", "index.html"),
-            favicon: "./public/favicon.ico",
-            filename: "index.html",
-            manifest: "./public/manifest.json",
-        })
+            template: path.resolve(__dirname, 'public', 'index.html'),
+            favicon: './public/favicon.ico',
+            filename: 'index.html',
+            manifest: './public/manifest.json',
+        }),
     ],
-    devServer: {
-        static: {
-            directory: path.join(__dirname, 'public'), // Correctly serve the public directory
-        },
-        compress: true,
-        port: 9000,
-        historyApiFallback: true,
-    },
-    mode: 'development',
 };
