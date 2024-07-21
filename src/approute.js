@@ -15,6 +15,9 @@ const Messenger = lazy(() => import('./features/messenger/messenger'));
 const CounterRedux = lazy(() => import('./features/CounterRedux/Counter'));
 const LazyLoading = lazy(() => import('./features/lazyloading/app'));
 const Custom = lazy(() => import('./features/customHook/form'));
+const Counter = lazy(() => import('./features/customHook/counter'));
+const DataFetch = lazy(() => import('./features/customHook/datafetch'));
+const Timer = lazy(() => import('./features/timer'));
 
 
 export default function AppRoute(props) {
@@ -28,6 +31,9 @@ export default function AppRoute(props) {
                     <Route path="/redux" element={<CounterRedux />} />
                     <Route path="/lazy" element={<LazyLoading />} />
                     <Route path="/custom" element={<Custom />} />
+                    <Route path="/counter" element={<Counter />} />
+                    <Route path="/data" element={<DataFetch />} />
+                    <Route path="/timer" element={<Timer />} />
                 </Routes>
             </Suspense>
             {/* <Routes>

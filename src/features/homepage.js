@@ -52,6 +52,9 @@ export default function Home() {
         { id: 4, name: 'Messenger', url: '/messenger' },
         { id: 5, name: 'Lazy', url: '/lazy' },
         { id: 6, name: 'Custom', url: '/custom' },
+        { id: 7, name: 'Counter', url: '/Counter' },
+        { id: 8, name: 'Data Fetch', url: '/data' },
+        { id: 9, name: 'Time', url: '/timer' },
     ];
 
     return (
