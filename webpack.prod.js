@@ -8,9 +8,10 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 module.exports = merge(common, {
     mode: 'production',
     output: {
-        filename: 'bundle.[contenthash].js', // Adding contenthash for cache busting
+        filename: '[name].[contenthash].js', // Adding contenthash for cache busting
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
+        clean: true,
     },
     module: {
         rules: [
@@ -21,6 +22,10 @@ module.exports = merge(common, {
         ],
     },
     optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            chunks: 'all',
+        },
         minimize: true,
         minimizer: [
             new TerserPlugin({
@@ -32,6 +37,7 @@ module.exports = merge(common, {
     plugins: [
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
+            chunkFilename: "[id].[contenthash].css",
         }),
     ],
 });

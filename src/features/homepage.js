@@ -12,9 +12,20 @@ export default function Home() {
         { title: 'post Two', body: 'This is post two' }
     ]);
 
+    const [contentList, setContents] = useState([])
+
     useEffect(() => {
         console.log(`hello ${what}`)
     }, [what])
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/content')
+            .then((res) => res = res.json())
+            .then((data) => {
+                setContents(data);
+            })
+            .catch((error) => console.log(error));
+    }, [])
 
     async function createPosts(post) {
         return new Promise((resolve) => {
@@ -39,6 +50,8 @@ export default function Home() {
         { id: 2, name: 'Reducer', url: '/reducer' },
         { id: 3, name: 'Redux', url: '/redux' },
         { id: 4, name: 'Messenger', url: '/messenger' },
+        { id: 5, name: 'Lazy', url: '/lazy' },
+        { id: 6, name: 'Custom', url: '/custom' },
     ];
 
     return (
@@ -47,8 +60,8 @@ export default function Home() {
             <button onClick={() => setWhat('Sneha')}>Sneha</button>
             <button onClick={() => setWhat('Vinay')}>Vinay</button>
 
-            <input type="checkbox" value={checked} onChange={setChecked} />
-            <label>{checked ? "Checked" : "Not Checked"}</label>
+            <input type="checkbox" id="checkbox" value={checked} onChange={setChecked} />
+            <label htmlFor="checkbox">{checked ? "Checked" : "Not Checked"}</label>
 
             <h2>Async-Await/Promises</h2>
             <ul>
@@ -56,6 +69,15 @@ export default function Home() {
                     <li key={index}>{post.title}</li>
                 ))}
             </ul>
+
+            {contentList.length > 0 && <div>
+                <h2>From Backend</h2>
+                <ul>
+                    {contentList.map((con) => (
+                        <li key={con.id}>{con.title}</li>
+                    ))}
+                </ul>
+            </div>}
 
             <div>
                 <h1>List of Items</h1>

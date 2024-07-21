@@ -1,3 +1,4 @@
+import React from 'react';
 import { useReducer } from 'react';
 import Chat from './chat.js';
 import ContactList from './contactList.js';
@@ -25,7 +26,7 @@ export default function Messenger() {
 }
 
 const contacts = [
-  {id: 0, name: 'Taylor', email: 'taylor@mail.com'},
-  {id: 1, name: 'Alice', email: 'alice@mail.com'},
-  {id: 2, name: 'Bob', email: 'bob@mail.com'},
+  { id: 0, name: 'Taylor', email: 'taylor@mail.com' },
+  { id: 1, name: 'Alice', email: 'alice@mail.com' },
+  { id: 2, name: 'Bob', email: 'bob@mail.com' },
 ];
