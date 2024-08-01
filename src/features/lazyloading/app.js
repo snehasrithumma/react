@@ -20,7 +20,6 @@ export default function MarkdownEditor() {
             else {
                 console.log('Computed new cache')
                 let result = await func(...args);
-                console.log(result)
                 cache.set(key, result)
                 return result;
             }
@@ -36,11 +35,11 @@ export default function MarkdownEditor() {
         })
     }
 
-    const memoizedFunction = memoize(slowFunction)
-        (async () => {
-            console.log(await memoizedFunction(5)); // Outputs: Computed new cache\n 500
-            console.log(await memoizedFunction(5)); // Outputs: from cache\n 500
-        })();
+    const memoizedFunction = memoize(slowFunction);
+    (async () => {
+        console.log(await memoizedFunction(5)); // Outputs: Computed new cache\n 500
+        console.log(await memoizedFunction(5)); // Outputs: from cache\n 500
+    })();
 
     return (
         <>

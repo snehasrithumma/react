@@ -10,9 +10,9 @@ import { StrictMode } from 'react';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <StrictMode>
-      <App />
-    </StrictMode>
+    {/* <StrictMode> */}
+    <App />
+    {/* </StrictMode> */}
   </Provider>,
 );
 

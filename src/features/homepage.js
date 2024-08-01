@@ -2,30 +2,37 @@ import React from 'react';
 import '../App.css';
 import { useEffect, useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../Context/authContext';
+import useFetch from './customHook/useFetch';
+import Dropdown from './DROPDOWN/dropdown';
+import { User, Person } from './user';
 
 // function Home({ app }) {
 export default function Home() {
-    const [what, setWhat] = useState('Sasha');
+    const { userEmail } = useAuth();
+    const [user, setUser] = useState(userEmail);
+    const [searchText, SetSearchText] = useState('')
     const [checked, setChecked] = useReducer((checked) => !checked, false);
     const [posts, setPosts] = useState([
         { title: 'post one', body: 'This is post one' },
         { title: 'post Two', body: 'This is post two' }
     ]);
 
-    const [contentList, setContents] = useState([])
-
     useEffect(() => {
-        console.log(`hello ${what}`)
-    }, [what])
 
-    useEffect(() => {
-        fetch('http://localhost:8080/api/content')
-            .then((res) => res = res.json())
-            .then((data) => {
-                setContents(data);
-            })
-            .catch((error) => console.log(error));
-    }, [])
+        const user1 = new User('sneha', 1, 'sneha@gmail.com')
+
+        console.log(user1.login())
+        console.log(user1.greet())
+
+        const person = new Person('sasha', 1)
+        console.log(person.welcome())
+        console.log(person.logout())
+        // console.log(`hello ${user}`)
+    }, [user])
+
+    const { contentList, loading, error } = useFetch('http://localhost:8080/api/content', 3, 100);
+    // console.log(contentList, loading, error)
 
     async function createPosts(post) {
         return new Promise((resolve) => {
@@ -35,13 +42,11 @@ export default function Home() {
         });
     }
 
-
-    async function addPost() {
-        const newPost = await createPosts({ title: 'post 3', body: 'This is post 3' });
-        setPosts((prevPosts) => [...prevPosts, newPost]);
-    }
-
     useEffect(() => {
+        async function addPost() {
+            const newPost = await createPosts({ title: 'post 3', body: 'This is post 3' });
+            setPosts((oldPosts) => [...oldPosts, newPost]);
+        }
         addPost();
     }, []);
 
@@ -51,17 +56,35 @@ export default function Home() {
         { id: 3, name: 'Redux', url: '/redux' },
         { id: 4, name: 'Messenger', url: '/messenger' },
         { id: 5, name: 'Lazy', url: '/lazy' },
-        { id: 6, name: 'Custom', url: '/custom' },
         { id: 7, name: 'Counter', url: '/Counter' },
         { id: 8, name: 'Data Fetch', url: '/data' },
         { id: 9, name: 'Time', url: '/timer' },
+        { id: 10, name: 'Calculator', url: '/calculator' },
+        { id: 11, name: 'AutoComplete', url: '/autoComplete' },
+        { id: 12, name: 'wordle', url: '/wordle' },
+        { id: 13, name: 'sudoku', url: '/sudoku' },
     ];
+
+    const handleSelect = (item) => {
+        console.log("Selected item:", item);
+    };
+
+    const searchMatchText = () => {
+        let inputText = document.getElementsByClassName('text')
+        let innerHTML = inputText[0].innerText;
+        console.log(innerHTML);
+        var index = innerHTML.indexOf(searchText);
+        if (index >= 0) {
+            innerHTML = innerHTML.substring(0, index) + "<span class='highlight'>" + innerHTML.substring(index, index + searchText.length) + "</span>" + innerHTML.substring(index + searchText.length);
+            inputText[0].innerHTML = innerHTML;
+        }
+    }
 
     return (
         <div className="App">
-            <div>Hello {what}</div>
-            <button onClick={() => setWhat('Sneha')}>Sneha</button>
-            <button onClick={() => setWhat('Vinay')}>Vinay</button>
+            <div>Hello {user}</div>
+            <button onClick={() => setUser('Sneha')}>Sneha</button>
+            <button onClick={() => setUser('Vinay')}>Vinay</button>
 
             <input type="checkbox" id="checkbox" value={checked} onChange={setChecked} />
             <label htmlFor="checkbox">{checked ? "Checked" : "Not Checked"}</label>
@@ -73,7 +96,7 @@ export default function Home() {
                 ))}
             </ul>
 
-            {contentList.length > 0 && <div>
+            {contentList && contentList.length > 0 && <div>
                 <h2>From Backend</h2>
                 <ul>
                     {contentList.map((con) => (
@@ -92,6 +115,11 @@ export default function Home() {
                     ))}
                 </ul>
             </div>
+            {/* <Dropdown items={['val 1', 'val 2', 'val 3']} onSelect={handleSelect}></Dropdown> */}
+            <div className='text'>The load event fires at the end of the document loading process. At this point, all of the objects in the document are in the DOM, and all the images, scripts, links and sub-frames have finished loading.
+
+                The DOM event DOMContentLoaded will fire after the DOM for the page has been constructed, but do not wait for other resources to finish loading. This is preferred in certain cases when you do not need the full page to be loaded before initializing.</div>
+            <label>TEXT:<input type='text' value={searchText} onChange={(e) => { SetSearchText(e.target.value) }} /></label><button onClick={searchMatchText}></button>
         </div>
     );
 }
