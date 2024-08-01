@@ -1,0 +1,75 @@
+/* keypad.css */
+.keypad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.keypad-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.key {
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    font-size: 1.25em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-transform: uppercase;
+}
+
+.key:active {
+    transform: scale(0.95);
+}
+
+.key.green {
+    background-color: #6aaa64;
+    color: white;
+}
+
+.key.orange {
+    background-color: #c9b458;
+    color: white;
+}
+
+.key.darkgray {
+    background-color: #787c7e;
+    color: white;
+}
+
+.key.grey {
+    background-color: #d3d6da;
+    color: #000;
+    font-weight: bold;
+}
+
+.enter {
+    flex: 1.5;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #d3d6da;
+    transition: background-color 0.3s, transform 0.2s;
+    text-transform: uppercase;
+}
+
+.backspace {
+    flex: 1.5;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #d3d6da;
+    transition: background-color 0.3s, transform 0.2s;
+    text-transform: uppercase;
+}

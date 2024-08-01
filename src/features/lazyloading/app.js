@@ -6,6 +6,42 @@ const MarkdownPreview = lazy(() => delayForDemo(import('./MarkdownPreview.js')))
 export default function MarkdownEditor() {
     const [showPreview, setShowPreview] = useState(false);
     const [markdown, setMarkdown] = useState('Hello, **world**!');
+
+
+    // Memoization
+    function memoize(func) {
+        const cache = new Map();
+        return async function (...args) {
+            const key = JSON.stringify(args);
+            if (cache.has(key)) {
+                console.log('from cache')
+                return cache.get(key)
+            }
+            else {
+                console.log('Computed new cache')
+                let result = await func(...args);
+                console.log(result)
+                cache.set(key, result)
+                return result;
+            }
+        }
+    }
+
+    const slowFunction = (num) => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(num * 100)
+            }, 5000)
+
+        })
+    }
+
+    const memoizedFunction = memoize(slowFunction)
+        (async () => {
+            console.log(await memoizedFunction(5)); // Outputs: Computed new cache\n 500
+            console.log(await memoizedFunction(5)); // Outputs: from cache\n 500
+        })();
+
     return (
         <>
             <textarea value={markdown} onChange={e => setMarkdown(e.target.value)} />
