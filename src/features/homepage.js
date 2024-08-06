@@ -63,6 +63,7 @@ export default function Home() {
         { id: 11, name: 'AutoComplete', url: '/autoComplete' },
         { id: 12, name: 'wordle', url: '/wordle' },
         { id: 13, name: 'sudoku', url: '/sudoku' },
+        { id: 14, name: 'snake', url: '/snake' },
     ];
 
     const handleSelect = (item) => {

@@ -1,14 +1,15 @@
 .grid {
     display: grid;
-    grid-template-columns: repeat(9, 30px);
+    grid-template-columns: repeat(3, 100px);
 }
 
 .cell {
-    height: 30px;
-    width: 30px;
+    height: 100px;
+    width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 12px;
-    ;
+    font-size: xx-large;
+    text-align: center;
+    text-transform: uppercase;
 }

@@ -5,6 +5,7 @@ import Login from './features/login';
 import { useAuth } from './Context/authContext';
 import Wordle from './wordle/app';
 import Sudoku from './sudoku/app';
+import Snake from './snake/snake';
 
 const Home = lazy(() => import('./features/homepage'));
 const CounterReducer = lazy(() => import('./features/CounterReducer/reducer'));
@@ -37,8 +38,9 @@ const buttonStyle = {
 export default function AppRoute() {
     const { isLoggedIn, logout } = useAuth()
     return (
-        <>
-            {isLoggedIn && <button style={buttonStyle} onClick={logout}>Log Out</button>}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div>
+                {isLoggedIn && <button style={buttonStyle} onClick={logout}>Log Out</button>}</div>
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route path="/login" element={<Login />} />
@@ -54,8 +56,9 @@ export default function AppRoute() {
                     <Route path="/autoComplete" element={<ProtectedRoute element={<AutoComplete />} />} />
                     <Route path="/wordle" element={<ProtectedRoute element={<Wordle />} />} />
                     <Route path="/sudoku" element={<ProtectedRoute element={<Sudoku />} />} />
+                    <Route path="/snake" element={<ProtectedRoute element={<Snake />} />} />
                 </Routes>
             </Suspense>
-        </>
+        </div>
     );
 }

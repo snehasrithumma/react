@@ -1,0 +1,38 @@
+.grid-container {
+    border: 1px solid black;
+    width: fit-content;
+    background-color: white;
+}
+
+.grid-row {
+    display: block;
+    height: 20px;
+}
+
+.grid-element {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ddd;
+}
+
+.snake {
+    border-radius: 10px;
+}
+
+.head {
+    background-color: lightgreen;
+}
+
+.tail {
+    background-color: green;
+}
+
+.rock {
+    background-color: gray;
+}
+
+.apple {
+    border-radius: 10px;
+    background-color: red;
+}

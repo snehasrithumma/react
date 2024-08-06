@@ -13,10 +13,11 @@ export default function Wordle() {
     const [currentRow, setCurrentRow] = useState(0);
     const [word, setWord] = useState('');
     const [letterColors, setLetterColors] = useState({});
+    const [Success, setSuccess] = useState(null)
 
-    const inputRefs = useRef(
-        Array.from({ length: rows }, () => Array.from({ length: cols }, () => React.createRef()))
-    ).current;
+    // const inputRefs = useRef(
+    //     Array.from({ length: rows }, () => Array.from({ length: cols }, () => React.createRef()))
+    // ).current;
 
     useEffect(() => {
         const getRandomWord = () => {
@@ -27,7 +28,7 @@ export default function Wordle() {
     }, []);
 
     const handleTextInput = (rowIndex, columnIndex, value) => {
-        if (value.length > 1) return; // Ignore input if more than one character
+        // if (value.length > 1) return; // Ignore input if more than one character
 
         setGuess((prevGuess) => {
             const updatedGuess = [...prevGuess];
@@ -36,17 +37,16 @@ export default function Wordle() {
             return updatedGuess;
         });
 
-        // Move focus based on input
-        if (value && columnIndex < cols - 1) {
-            inputRefs[rowIndex][columnIndex + 1].current.focus();
-        } else if (!value && columnIndex > 0) {
-            inputRefs[rowIndex][columnIndex - 1].current.focus();
-        }
+        // // Move focus based on input
+        // if (value && columnIndex < cols - 1) {
+        //     inputRefs[rowIndex][columnIndex + 1].current.focus();
+        // } else if (!value && columnIndex > 0) {
+        //     inputRefs[rowIndex][columnIndex - 1].current.focus();
+        // }
     };
 
     const handleSubmit = () => {
         let enteredWord = guess[currentRow].join('');
-        console.log(enteredWord)
         if (!fiveLetterWords.includes(enteredWord)) {
             alert('Not a valid word');
             return;
@@ -72,12 +72,10 @@ export default function Wordle() {
             guess[currentRow].forEach((element, i) => {
                 if (feedbackRow[i] !== 'green' && targetArray.includes(element)) {
                     feedbackRow[i] = 'orange';
-                    if (newLetterColors[element] !== 'green') {
-                        newLetterColors[element] = 'orange';
-                    }
+                    newLetterColors[element] = 'orange';
                 }
             });
-            //doexnt exist - for key pad
+            //doesnt exist - for key pad
             guess[currentRow].forEach((element, i) => {
                 if (newLetterColors[i] !== 'green' && newLetterColors[i] !== 'orange' && !targetArray.includes(element)) {
                     newLetterColors[element] = 'darkgray';
@@ -91,8 +89,12 @@ export default function Wordle() {
             if (enteredWord === word) {
                 alert('Success!');
                 setCurrentRow(rows + 1);
+                setSuccess(true)
             } else if (currentRow < rows - 1) {
                 setCurrentRow(currentRow + 1);
+            }
+            else if (currentRow === rows - 1) {
+                alert('sorry you lost')
             }
         }
     };
@@ -131,7 +133,7 @@ export default function Wordle() {
     }
 
     return (
-        <>
+        Success !== true ? <div>
             <div className="Board">
                 <div className="Board-main">
                     {guess.map((row, rowIndex) => (
@@ -140,7 +142,7 @@ export default function Wordle() {
                                 <div data-value={cell}
                                     key={columnIndex}
                                     className={`cell ${feedback[rowIndex][columnIndex]}`}
-                                    ref={inputRefs[rowIndex][columnIndex]}
+                                // ref={inputRefs[rowIndex][columnIndex]}
                                 >
                                     {cell}
                                 </div>
@@ -149,6 +151,7 @@ export default function Wordle() {
                     ))}
                 </div>
             </div>
-            <Keypad letterColors={letterColors} onKeyPress={handleKeyPress} /></>
+            <Keypad letterColors={letterColors} onKeyPress={handleKeyPress} />
+        </div> : <div>Congratualtions!</div>
     );
 }
