@@ -42,6 +42,17 @@ export default function Home() {
         });
     }
 
+    // let response = fetch('https://jsonplaceholder.typicode.com/comments?postId=1');
+    // response.then(data => data.json()).then(data => console.log(data))
+
+    const getData = async () => {
+        let response = await fetch('https://jsonplaceholder.typicode.com/comments?postId=1');
+        let data = await response.json();
+        console.log(data)
+    }
+
+    getData()
+
     useEffect(() => {
         async function addPost() {
             const newPost = await createPosts({ title: 'post 3', body: 'This is post 3' });
@@ -64,11 +75,10 @@ export default function Home() {
         { id: 12, name: 'wordle', url: '/wordle' },
         { id: 13, name: 'sudoku', url: '/sudoku' },
         { id: 14, name: 'snake', url: '/snake' },
+        { id: 15, name: 'TODO Redux', url: '/withredux' },
+        { id: 16, name: 'TODO Reducer', url: '/withreducer' },
+        { id: 17, name: 'TODO Practice', url: '/practice' },
     ];
-
-    const handleSelect = (item) => {
-        console.log("Selected item:", item);
-    };
 
     const searchMatchText = () => {
         let inputText = document.getElementsByClassName('text')
@@ -79,6 +89,10 @@ export default function Home() {
             innerHTML = innerHTML.substring(0, index) + "<span class='highlight'>" + innerHTML.substring(index, index + searchText.length) + "</span>" + innerHTML.substring(index + searchText.length);
             inputText[0].innerHTML = innerHTML;
         }
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches) {
+        const theme = 'dark';
+        console.log(theme)
     }
 
     return (

@@ -32,3 +32,55 @@ https://react.dev/learn/updating-arrays-in-state
 
 
 /npx webpack --profile --json > stats.json
+
+
+What is the lifecycle in React? 
+The React lifecycle refers to the sequence of methods that are called at different stages of a component’s existence: mounting, updating, and unmounting. In class components, these include methods like componentDidMount, componentDidUpdate, and componentWillUnmount. In functional components with hooks, the lifecycle behavior is managed using useEffect.
+
+What is a Higher-Order Component? 
+A Higher-Order Component (HOC) is a pattern in React for reusing component logic. An HOC is a function that takes a component and returns a new component with additional props or behavior. It allows you to enhance or share functionality between components.
+What is the difference between useMemo and React.memo? 
+
+useMemo is a React hook used inside functional components to memoize the result of a computation so that it only recalculates when dependencies change. React.memo is a higher-order component that memoizes the entire component and prevents re-rendering if its props haven’t changed.
+What is a memory leak?
+
+A memory leak occurs when a program allocates memory but fails to release it back to the system after it's no longer needed. In React, this can happen if event listeners or timers are not cleaned up properly, leading to wasted memory and potential performance issues.
+What is the dynamic index in TypeScript? 📜
+
+The dynamic index in TypeScript allows you to access properties of an object using a variable as the key. It is used with index signatures to define types for objects where property names are not known in advance. For example: { [key: string]: number } allows any string key with a number value.
+What is the grid system in CSS?🛠️
+
+The CSS grid system is a layout framework that uses a grid-based approach to arrange elements. It consists of rows and columns that help in creating complex and responsive layouts. CSS Grid Layout is a two-dimensional layout system that provides more control over alignment, spacing, and distribution of elements compared to traditional layout methods.
+What is lifting state up in React?🚀
+
+Lifting state up is a pattern in React where you move the state from a child component to a parent component to share it between sibling components or to centralize state management. This approach allows parent components to manage and pass down state and state-changing functions to their children.
+What is a custom hook in React.js? 🪝
+
+A custom hook is a JavaScript function in React that uses built-in hooks (like useState and useEffect) to encapsulate and reuse stateful logic across multiple components. Custom hooks allow you to extract and share complex logic without changing component structure.
+What is the difference between null and undefined?❓
+
+null is an intentional absence of a value, often used to indicate that a variable has been explicitly set to have no value. undefined means a variable has been declared but not yet assigned a value or doesn’t exist.
+What is the output of [] == []?🤔
+
+The output is false. In JavaScript, arrays (and objects) are compared by reference, not by value. Since [] creates a new array object each time, two distinct array objects will never be equal, even if they are both empty.
+What are Primitive Types and Union Types?🔍
+
+Primitive types in TypeScript include number, string, boolean, null, undefined, symbol, and bigint. Union types allow a variable to hold one of several types, specified using the | operator. For example, string | number means the variable can be either a string or a number.
+How does JavaScript handle memory?🧠
+
+JavaScript uses automatic memory management through garbage collection. The JavaScript engine automatically allocates memory for variables and objects and reclaims memory that is no longer in use or referenced, freeing up resources and preventing memory leaks.
+What are React hooks?🪝
+
+React hooks are functions that let you use state and other React features in functional components. Common hooks include useState, useEffect, useContext, useReducer, and useCallback. They enable you to manage state, side effects, and other functionalities without using class components.
+How does the Virtual DOM work? 🌐
+
+The Virtual DOM is a lightweight in-memory representation of the actual DOM. When a component’s state or props change, React updates the Virtual DOM first. It then calculates the difference (diffing) between the previous and new Virtual DOMs and updates the real DOM only where changes occurred, optimizing performance.
+How does the Event Loop work in JavaScript?🔄
+
+The Event Loop is a mechanism that allows JavaScript to handle asynchronous operations. It continuously checks the call stack and task queue. If the call stack is empty, the event loop processes tasks in the queue, such as callbacks and promises, ensuring non-blocking execution.
+What are the ways to manage state in a React application?🗂️
+
+State management in React can be handled using local state with useState, global state with Context API, state management libraries like Redux or MobX, or server-state management with libraries like React Query.
+What are the two algorithms that React is built on? 📊
+
+React is built on the Reconciliation Algorithm (used to determine what has changed in the Virtual DOM) and the Diffing Algorithm (used to efficiently update the real DOM based on the differences found).

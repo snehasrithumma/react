@@ -127,12 +127,19 @@ const top100Films = [
     { label: '3 Idiots', year: 2009 },
     { label: 'Monty Python and the Holy Grail', year: 1975 },
 ];
-
+const debounce = function (callback, delay) {
+    let timeoutId;
+    return (...args) => {
+        if (timeoutId) { clearTimeout(timeoutId); }
+        timeoutId = setTimeout(() => {
+            callback(...args)
+        }, delay)
+    }
+}
 export default function AutoComplete(props) {
     const [selected, setSelected] = useState([]);
     const [filterValText, setFilterVal] = useState('');
     const [movies, setMovies] = useState(top100Films);
-    const [timeoutId, setTimeoutId] = useState(null);
 
     const handleSelect = (e) => {
         e.preventDefault();
@@ -140,18 +147,15 @@ export default function AutoComplete(props) {
     }
     const handleInput = (e) => {
         setFilterVal(e.target.value);
-        handleMovies(e.target.value)
+        debouncehandleMovies(e.target.value)
     }
 
-    const handleMovies = (value) => {
-        clearTimeout(timeoutId)
-        const id = setTimeout(() => {
-            setMovies(top100Films.filter((val) => {
-                return ((val.label).toLowerCase()).includes(value.toLowerCase())
-            }))
-        }, 3000);
-        setTimeoutId(id)
-    }
+    const debouncehandleMovies = debounce((value) => {
+        setMovies(top100Films.filter((val) => {
+            return ((val.label).toLowerCase()).includes(value.toLowerCase())
+        }))
+    }, 2000)
+
     return (
         <>
             <label>Movie <input type='text' value={filterValText} onChange={handleInput}></input></label>

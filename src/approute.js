@@ -6,6 +6,8 @@ import { useAuth } from './Context/authContext';
 import Wordle from './wordle/app';
 import Sudoku from './sudoku/app';
 import Snake from './snake/snake';
+import ReduxTodo from './TODOApp/todo_redux';
+import ReducerTodo from './TODOApp/todo_reducer';
 
 const Home = lazy(() => import('./features/homepage'));
 const CounterReducer = lazy(() => import('./features/CounterReducer/reducer'));
@@ -17,6 +19,7 @@ const DataFetch = lazy(() => import('./features/customHook/datafetch'));
 const Timer = lazy(() => import('./features/timer'));
 const Mortgage = lazy(() => import('./features/mortgagecalculator'));
 const AutoComplete = lazy(() => import('./Components/autoComplete'));
+const TODO = lazy(() => import('./Practice/todo'))
 
 const buttonStyle = {
     margin: ' 10px',
@@ -39,8 +42,7 @@ export default function AppRoute() {
     const { isLoggedIn, logout } = useAuth()
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div>
-                {isLoggedIn && <button style={buttonStyle} onClick={logout}>Log Out</button>}</div>
+            <div>{isLoggedIn && <button style={buttonStyle} onClick={logout}>Log Out</button>}</div>
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route path="/login" element={<Login />} />
@@ -57,6 +59,9 @@ export default function AppRoute() {
                     <Route path="/wordle" element={<ProtectedRoute element={<Wordle />} />} />
                     <Route path="/sudoku" element={<ProtectedRoute element={<Sudoku />} />} />
                     <Route path="/snake" element={<ProtectedRoute element={<Snake />} />} />
+                    <Route path="/withredux" element={<ProtectedRoute element={<ReduxTodo />} />} />
+                    <Route path="/withreducer" element={<ProtectedRoute element={<ReducerTodo />} />} />
+                    <Route path="/practice" element={<ProtectedRoute element={<TODO />} />} />
                 </Routes>
             </Suspense>
         </div>
