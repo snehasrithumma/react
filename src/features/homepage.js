@@ -6,6 +6,109 @@ import { useAuth } from '../Context/authContext';
 import useFetch from './customHook/useFetch';
 import Dropdown from './DROPDOWN/dropdown';
 import { User, Person } from './user';
+import RegularList from '../Lists/List';
+import SmallListItem from '../Lists/smallList';
+import LargeListItem from '../Lists/LargeListItems';
+
+const listItems = [
+    {
+      "postId": 1,
+      "id": 1,
+      "name": "id labore ex et quam laborum",
+      "email": "Eliseo@gardner.biz",
+      "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+    },
+    {
+      "postId": 1,
+      "id": 2,
+      "name": "quo vero reiciendis velit similique earum",
+      "email": "Jayne_Kuhic@sydney.com",
+      "body": "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et"
+    },
+    {
+      "postId": 2,
+      "id": 6,
+      "name": "et fugit eligendi deleniti quidem qui sint nihil autem",
+      "email": "Presley.Mueller@myrl.com",
+      "body": "doloribus at sed quis culpa deserunt consectetur qui praesentium\naccusamus fugiat dicta\nvoluptatem rerum ut voluptate autem\nvoluptatem repellendus aspernatur dolorem in"
+    },
+    {
+      "postId": 2,
+      "id": 7,
+      "name": "repellat consequatur praesentium vel minus molestias voluptatum",
+      "email": "Dallas@ole.me",
+      "body": "maiores sed dolores similique labore et inventore et\nquasi temporibus esse sunt id et\neos voluptatem aliquam\naliquid ratione corporis molestiae mollitia quia et magnam dolor"
+    },
+    {
+      "postId": 2,
+      "id": 8,
+      "name": "et omnis dolorem",
+      "email": "Mallory_Kunze@marie.org",
+      "body": "ut voluptatem corrupti velit\nad voluptatem maiores\net nisi velit vero accusamus maiores\nvoluptates quia aliquid ullam eaque"
+    },
+    {
+      "postId": 2,
+      "id": 9,
+      "name": "provident id voluptas",
+      "email": "Meghan_Littel@rene.us",
+      "body": "sapiente assumenda molestiae atque\nadipisci laborum distinctio aperiam et ab ut omnis\net occaecati aspernatur odit sit rem expedita\nquas enim ipsam minus"
+    },
+    {
+      "postId": 2,
+      "id": 10,
+      "name": "eaque et deleniti atque tenetur ut quo ut",
+      "email": "Carmen_Keeling@caroline.name",
+      "body": "voluptate iusto quis nobis reprehenderit ipsum amet nulla\nquia quas dolores velit et non\naut quia necessitatibus\nnostrum quaerat nulla et accusamus nisi facilis"
+    },
+    {
+      "postId": 6,
+      "id": 27,
+      "name": "doloribus quibusdam molestiae amet illum",
+      "email": "Francesco.Gleason@nella.us",
+      "body": "nisi vel quas ut laborum ratione\nrerum magni eum\nunde et voluptatem saepe\nvoluptas corporis modi amet ipsam eos saepe porro"
+    },
+    {
+      "postId": 7,
+      "id": 32,
+      "name": "dolorem architecto ut pariatur quae qui suscipit",
+      "email": "Maria@laurel.name",
+      "body": "nihil ea itaque libero illo\nofficiis quo quo dicta inventore consequatur voluptas voluptatem\ncorporis sed necessitatibus velit tempore\nrerum velit et temporibus"
+    },
+    {
+      "postId": 7,
+      "id": 33,
+      "name": "voluptatum totam vel voluptate omnis",
+      "email": "Jaeden.Towne@arlene.tv",
+      "body": "fugit harum quae vero\nlibero unde tempore\nsoluta eaque culpa sequi quibusdam nulla id\net et necessitatibus"
+    },
+    {
+      "postId": 8,
+      "id": 40,
+      "name": "non minima omnis deleniti pariatur facere quibusdam at",
+      "email": "Clare.Aufderhar@nicole.ca",
+      "body": "quod minus alias quos\nperferendis labore molestias quae ut ut corporis deserunt vitae\net quaerat ut et ullam unde asperiores\ncum voluptatem cumque"
+    },
+    {
+      "postId": 9,
+      "id": 41,
+      "name": "voluptas deleniti ut",
+      "email": "Lucio@gladys.tv",
+      "body": "facere repudiandae vitae ea aut sed quo ut et\nfacere nihil ut voluptates in\nsaepe cupiditate accusantium numquam dolores\ninventore sint mollitia provident"
+    },
+    {
+      "postId": 9,
+      "id": 45,
+      "name": "autem illo facilis",
+      "email": "Marcia@name.biz",
+      "body": "ipsum odio harum voluptatem sunt cumque et dolores\nnihil laboriosam neque commodi qui est\nquos numquam voluptatum\ncorporis quo in vitae similique cumque tempore"
+    },
+    {
+      "postId": 10,
+      "id": 46,
+      "name": "dignissimos et deleniti voluptate et quod",
+      "email": "Jeremy.Harann@waino.me",
+      "body": "exercitationem et id quae cum omnis\nvoluptatibus accusantium et quidem\nut ipsam sint\ndoloremque illo ex atque necessitatibus sed"
+    }] 
 
 // function Home({ app }) {
 export default function Home() {
@@ -65,40 +168,28 @@ export default function Home() {
                 stream: true
             })
         })
-            .then(response => {
+            .then((response) => {
+                let reponseRecieved = '';
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder("utf-8");
-
-                let fullResponse = "";  // To store the complete response text
-
                 function processChunk({ done, value }) {
                     if (done) {
-                        console.log("Stream complete");
-                        console.log("Full response:", fullResponse);
+                        console.log("Full response:", reponseRecieved);
                         return;
                     }
-
-                    // Decode the chunk and split by newline to get each JSON object
                     const chunk = decoder.decode(value, { stream: true });
                     const messages = chunk.trim().split("\n");
-
-                    // Process each message
                     messages.forEach(message => {
                         try {
-                            const parsed = JSON.parse(message);
-                            console.log("Received response part:", parsed.response);
-
-                            // Append to the full response
-                            fullResponse += parsed.response;
-                        } catch (error) {
+                            let value = JSON.parse(message);
+                            reponseRecieved += value.response
+                        }
+                        catch (error) {
                             console.error("Error parsing JSON chunk:", error);
                         }
-                    });
-
-                    // Read the next chunk
+                    })
                     return reader.read().then(processChunk);
                 }
-
                 return reader.read().then(processChunk);
             })
             .catch(error => console.error("Error:", error));
@@ -197,6 +288,8 @@ export default function Home() {
                 <div className="child"></div>
                 <div className="child"></div>
             </div>
+            <RegularList items={listItems} resourceType='person' component={SmallListItem} />
+            <RegularList items={listItems} resourceType='person' component={LargeListItem} />
         </div>
     );
 }

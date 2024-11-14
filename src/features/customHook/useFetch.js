@@ -19,15 +19,13 @@ const useFetch = (url, retries, delay) => {
                     const result = await response.json();
                     setData(result);
                     setError(null);  // Clear error on success
-                } else {
-                    throw new Error(`Error: ${response.statusText}`);
                 }
             } catch (err) {
                 if (attempt < retries) {
                     setTimeout(() => fetchData(attempt + 1), delay);
                 } else {
                     console.error(`Failed after ${retries} attempts with delay of ${delay}ms`);
-                    setError(err.message || 'Failed to fetch');
+                    setError(err.message);
                     setData(null);
                 }
             } finally {

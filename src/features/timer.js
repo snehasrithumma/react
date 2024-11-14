@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 
 export default function Timer() {
     const [characters, setCharacters] = useState([]);
-    const [isLoading, setIsLoading] = useState(false); console.count('render');
+    const [isLoading, setIsLoading] = useState(false);
+    console.count('render');
 
     useEffect(() => {
         const getData = async () => {
@@ -23,22 +24,32 @@ export default function Timer() {
         getData();
     }, []);
 
-    const slow = (word) => {
+    // const slow = (word) => {
 
-        const typeNextCharacter = () => {
-            setCharacters((prevChar) => {
-                const i = prevChar.length;
-                if (i < word.length) {
-                    setTimeout(typeNextCharacter, 500);
-                    return [...prevChar, word[i]];
-                } else {
-                    return prevChar;
-                }
-            });
-        };
+    //     const typeNextCharacter = () => {
+    //         setCharacters((prevChar) => {
+    //             const i = prevChar.length;
+    //             if (i < word.length) {
+    //                 setTimeout(typeNextCharacter, 500);
+    //                 return [...prevChar, word[i]];
+    //             } else {
+    //                 return prevChar;
+    //             }
+    //         });
+    //     };
 
-        typeNextCharacter(); // Start the typing effect
+    //     typeNextCharacter(); // Start the typing effect
+    // };
+
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const slow = async (word) => {
+        for (let i = 0; i < word.length; i++) {
+            setCharacters((prevChar) => [...prevChar, word[i]]);
+            await delay(500); // Wait 500ms between each character
+        }
     };
+
 
     return (<div>
         {isLoading ? (

@@ -68,7 +68,6 @@ function InputDialog({ open, onClose, onSubmit }) {
                 backgroundColor: 'white',
                 borderRadius: '8px',
                 padding: '20px',
-                position: 'relative',
                 maxWidth: '500px',
                 boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
             }}>
@@ -147,7 +146,7 @@ export default function TODOReducer() {
                                 checked={item.status === STATUS.COMPLETED}
                             />
                             <span>{item.name}</span>
-                            <button type='button' onClick={() => deleteItem(item.id)}>Delete</button>
+                            <button type='button' onClick={() => dispatch({ type: 'DELETE_ITEM', payload: { id: item.id } })}>Delete</button>
                         </div>
                     ))}
                 </div>

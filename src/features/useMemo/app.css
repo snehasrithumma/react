@@ -1,0 +1,29 @@
+.header {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+.post-wrapper {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: start;
+    flex-wrap: wrap;
+}
+
+.post-title {
+    background-color: lightgrey;
+    width: 100%;
+    cursor: pointer;
+    padding-left: 10px;
+}
+
+.commnet-title {
+    font-weight: bold;
+}
+
+.commnet-subject {
+    margin-left: 10px;
+}

@@ -72,7 +72,9 @@ export default function Wordle() {
             guess[currentRow].forEach((element, i) => {
                 if (feedbackRow[i] !== 'green' && targetArray.includes(element)) {
                     feedbackRow[i] = 'orange';
-                    newLetterColors[element] = 'orange';
+                    if (newLetterColors[element] !== 'green') {
+                        newLetterColors[element] = 'orange';
+                    }
                 }
             });
             //doesnt exist - for key pad
@@ -101,27 +103,28 @@ export default function Wordle() {
 
     useEffect(() => {
         const handleKeyPress = (e) => {
+            if (currentRow >= rows) return; // Prevent input after game over
             if (e.key.match(/^[a-zA-Z]$/)) {
                 const index = guess[currentRow].indexOf('');
-                if (index < rows - 1) {
-                    handleTextInput(currentRow, index, e.key)
+                if (index < cols) {
+                    handleTextInput(currentRow, index, e.key);
                 }
-            }
-            else if (e.key === 'Enter') {
+            } else if (e.key === 'Enter') {
                 handleSubmit();
-            }
-            else if (e.key === 'Backspace') {
+            } else if (e.key === 'Backspace') {
                 const lastindex = guess[currentRow].indexOf('') !== -1 ? guess[currentRow].indexOf('') : cols;
-                if (lastindex >= 0) {
-                    handleTextInput(currentRow, lastindex - 1, '')
+                if (lastindex > 0) {
+                    handleTextInput(currentRow, lastindex - 1, '');
                 }
             }
-        }
+        };
+
         if (currentRow < rows) {
             window.addEventListener('keydown', handleKeyPress);
         }
-        return () => window.removeEventListener('keydown', handleKeyPress)
-    }, [guess, currentRow])
+
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, [guess, currentRow]);
 
     const handleKeyPress = (key) => {
         if (currentRow < rows) {

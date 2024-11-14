@@ -79,8 +79,20 @@ describe('Home Component', () => {
                 <Home />
             </Router>);
 
+        expect(screen.getByText('From Backend')).toBeInTheDocument();
         expect(screen.getByText('Content 1')).toBeInTheDocument();
         expect(screen.getByText('Content 2')).toBeInTheDocument();
+    });
+
+    test('No DATA', async () => {
+        useFetch.mockReturnValue({ contentList: [], loading: true, error: null });
+
+        render(
+            <Router>
+                <Home />
+            </Router>);
+
+        expect(screen.queryByText('From Backend')).not.toBeInTheDocument();
     });
 
     test('adds a post asynchronously on mount', async () => {

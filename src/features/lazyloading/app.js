@@ -3,10 +3,17 @@ import Loading from './loading.js';
 
 const MarkdownPreview = lazy(() => delayForDemo(import('./MarkdownPreview.js')));
 
+// Add a fixed delay so you can see the loading state
+async function delayForDemo(promise) {
+    await new Promise(resolve => {
+        setTimeout(resolve, 2000);
+    });
+    return promise;
+}
+
 export default function MarkdownEditor() {
     const [showPreview, setShowPreview] = useState(false);
     const [markdown, setMarkdown] = useState('Hello, **world**!');
-
 
     // Memoization
     function memoize(func) {
@@ -57,11 +64,4 @@ export default function MarkdownEditor() {
             )}
         </>
     );
-}
-
-// Add a fixed delay so you can see the loading state
-function delayForDemo(promise) {
-    return new Promise(resolve => {
-        setTimeout(resolve, 2000);
-    }).then(() => promise);
 }

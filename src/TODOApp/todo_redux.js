@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { addItem, selectItems, updateItemStatus, removeItem } from './todoReducer';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -8,8 +8,28 @@ const STATUS = Object.freeze({
 });
 
 function InputDialog({ open, onClose, onSubmit }) {
+    const contentRef = useRef();
     const [name, setName] = useState('');
     const [status, setStatus] = useState(STATUS.NOTSTARTED);
+
+    useEffect(() => {
+        function closeModal(event) {
+            // No-op if clicked element is a
+            // descendant of the modal contents.
+            if (contentRef.current?.contains(event.target)) {
+                return;
+            }
+            onClose();
+        }
+
+        document.addEventListener("mousedown", closeModal);
+        document.addEventListener("touchstart", closeModal);
+
+        return () => {
+            document.removeEventListener("mousedown", closeModal);
+            document.removeEventListener("touchstart", closeModal);
+        };
+    }, [onClose]);
 
     if (!open) return null;
     const handleSubmit = () => {
@@ -27,9 +47,9 @@ function InputDialog({ open, onClose, onSubmit }) {
         position: 'fixed', inset: 0,
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     }}>
-        <div style={{
+        <div ref={contentRef} role='dialog' style={{
             backgroundColor: 'white', borderRadius: '8px', padding: '20px',
-            position: 'relative', maxWidth: '500px', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
+            maxWidth: '500px', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
         }}>
             <h1>Item info</h1>
             <form onSubmit={handleSubmit}>

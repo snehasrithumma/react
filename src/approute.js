@@ -20,6 +20,7 @@ const Timer = lazy(() => import('./features/timer'));
 const Mortgage = lazy(() => import('./features/mortgagecalculator'));
 const AutoComplete = lazy(() => import('./Components/autoComplete'));
 const TODO = lazy(() => import('./Practice/todo'))
+const Comments = lazy(() => import('./features/useMemo/app'));
 
 const buttonStyle = {
     margin: ' 10px',
@@ -62,6 +63,7 @@ export default function AppRoute() {
                     <Route path="/withredux" element={<ProtectedRoute element={<ReduxTodo />} />} />
                     <Route path="/withreducer" element={<ProtectedRoute element={<ReducerTodo />} />} />
                     <Route path="/practice" element={<ProtectedRoute element={<TODO />} />} />
+                    <Route path="/comments" element={<Comments />} />
                 </Routes>
             </Suspense>
         </div>
