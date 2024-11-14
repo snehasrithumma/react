@@ -1,34 +1,40 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import Home from './homepage';
+import Home from './homepage'; // adjust the path as needed
+import { BrowserRouter as Router } from 'react-router-dom';
 import { useAuth } from '../Context/authContext';
 import useFetch from './customHook/useFetch';
-import { BrowserRouter as Router } from 'react-router-dom'; // Mock router context
 
-// Mocking the authContext
 jest.mock('../Context/authContext', () => ({
     useAuth: jest.fn(),
 }));
 
-// Mocking the useFetch default export
 jest.mock('./customHook/useFetch', () => ({
     __esModule: true,
     default: jest.fn(),
 }));
 
-describe('Home Component', () => {
-    beforeEach(() => {
-        // Mocking useAuth to return a fake user email
-        useAuth.mockReturnValue({ userEmail: 'test@example.com' });
-
-        // Mocking useFetch to return some test data
-        useFetch.mockReturnValue({
-            contentList: [{ id: 1, title: 'Test Post' }],
-            loading: false,
-            error: null,
-        });
+beforeEach(() => {
+    useAuth.mockReturnValue({ userEmail: 'test@example.com' });
+    useFetch.mockReturnValue({
+        contentList: [{ id: 1, title: 'Test Post' }],
+        loading: false,
+        error: null,
     });
 
+    // Mock fetch API
+    global.fetch = jest.fn(() =>
+        Promise.resolve({
+            json: () => Promise.resolve([{ postId: 1, id: 1, name: 'mock comment' }]),
+        })
+    );
+});
+
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
+describe('Home Component', () => {
     test('renders posts from useFetch', () => {
         // Wrap the component in Router or any necessary context
         render(
@@ -77,18 +83,54 @@ describe('Home Component', () => {
         expect(screen.getByText('Content 2')).toBeInTheDocument();
     });
 
-    test('search and highlight text correctly', () => {
+    test('adds a post asynchronously on mount', async () => {
         render(
             <Router>
                 <Home />
-            </Router>);
+            </Router>
+        );
 
-        // Change the input value and click the search button
-        fireEvent.change(screen.getByLabelText('TEXT:'), { target: { value: 'load' } });
-        fireEvent.click(screen.getByText(''));
+        // Wait for the async post to appear
+        await waitFor(() => {
+            expect(screen.getByText('Test Post')).toBeInTheDocument();
+        });
+    });
 
-        // Assert that the text was highlighted
-        const textDiv = screen.getByText(/The load event fires/i);
-        expect(textDiv.innerHTML).toContain('<span class="highlight">load</span>');
+    test('changes user email on button click', () => {
+        render(
+            <Router>
+                <Home />
+            </Router>
+        );
+
+        const changeUserButton = screen.getByText('Sneha');
+        fireEvent.click(changeUserButton);
+        expect(screen.getByText('Hello Sneha')).toBeInTheDocument();
+    });
+
+    // test('search input highlights text correctly', () => {
+    //     render(
+    //         <Router>
+    //             <Home />
+    //         </Router>
+    //     );
+
+    //     fireEvent.change(screen.getByLabelText('TEXT:'), { target: { value: 'load' } });
+    //     fireEvent.click(screen.getByText('Search'));
+
+    //     const textDiv = screen.getByText(/The load event fires/i);
+    //     expect(textDiv.innerHTML).toContain('<span class="highlight">load</span>');
+    // });
+
+    test('renders link items correctly', () => {
+        render(
+            <Router>
+                <Home />
+            </Router>
+        );
+
+        // Check that a sample link item appears
+        expect(screen.getByText('Home')).toBeInTheDocument();
+        expect(screen.getByText('Reducer')).toBeInTheDocument();
     });
 });

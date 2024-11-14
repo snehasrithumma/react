@@ -39,8 +39,11 @@ function User(username, role, dob, balance) {
     this.balance = balance;
 }
 
-User.prototype = Object.create(Bank.prototype); // Inherit methods from Bank
-User.prototype.constructor = User;
+// User.prototype = Object.create(Bank.prototype); // Inherit methods from Bank
+// User.prototype.constructor = User;
+// or use bellow
+// Set the child object's prototype to be the parent's prototype.
+Object.setPrototypeOf(User.prototype, Bank.prototype);
 
 User.prototype.getBalance = function () {
     return this.balance;

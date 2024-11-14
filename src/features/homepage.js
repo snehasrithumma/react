@@ -29,6 +29,7 @@ export default function Home() {
         console.log(person.welcome())
         console.log(person.logout())
         // console.log(`hello ${user}`)
+        getData()
     }, [user])
 
     const { contentList, loading, error } = useFetch('http://localhost:8080/api/content', 3, 100);
@@ -51,7 +52,57 @@ export default function Home() {
         console.log(data)
     }
 
-    getData()
+
+    const lama = async () => {
+        await fetch("http://localhost:11434/api/generate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                model: "tinyllama",
+                prompt: "why is the sky blue?",
+                stream: true
+            })
+        })
+            .then(response => {
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+
+                let fullResponse = "";  // To store the complete response text
+
+                function processChunk({ done, value }) {
+                    if (done) {
+                        console.log("Stream complete");
+                        console.log("Full response:", fullResponse);
+                        return;
+                    }
+
+                    // Decode the chunk and split by newline to get each JSON object
+                    const chunk = decoder.decode(value, { stream: true });
+                    const messages = chunk.trim().split("\n");
+
+                    // Process each message
+                    messages.forEach(message => {
+                        try {
+                            const parsed = JSON.parse(message);
+                            console.log("Received response part:", parsed.response);
+
+                            // Append to the full response
+                            fullResponse += parsed.response;
+                        } catch (error) {
+                            console.error("Error parsing JSON chunk:", error);
+                        }
+                    });
+
+                    // Read the next chunk
+                    return reader.read().then(processChunk);
+                }
+
+                return reader.read().then(processChunk);
+            })
+            .catch(error => console.error("Error:", error));
+    }
 
     useEffect(() => {
         async function addPost() {
@@ -59,6 +110,7 @@ export default function Home() {
             setPosts((oldPosts) => [...oldPosts, newPost]);
         }
         addPost();
+        lama()
     }, []);
 
     const urlItems = [
@@ -78,6 +130,7 @@ export default function Home() {
         { id: 15, name: 'TODO Redux', url: '/withredux' },
         { id: 16, name: 'TODO Reducer', url: '/withreducer' },
         { id: 17, name: 'TODO Practice', url: '/practice' },
+        { id: 18, name: 'Comments', url: '/comments' },
     ];
 
     const searchMatchText = () => {
@@ -135,6 +188,15 @@ export default function Home() {
 
                 The DOM event DOMContentLoaded will fire after the DOM for the page has been constructed, but do not wait for other resources to finish loading. This is preferred in certain cases when you do not need the full page to be loaded before initializing.</div>
             <label>TEXT:<input type='text' value={searchText} onChange={(e) => { SetSearchText(e.target.value) }} /></label><button onClick={searchMatchText}></button>
+            <div className="parent-container">
+                <div className="child"></div>
+                <div className="child"></div>
+                <div className="child"></div>
+                <div className="child"></div>
+                <div className="child"></div>
+                <div className="child"></div>
+                <div className="child"></div>
+            </div>
         </div>
     );
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 export default function Timer() {
     const [characters, setCharacters] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); console.count('render');
 
     useEffect(() => {
         const getData = async () => {
@@ -24,14 +24,17 @@ export default function Timer() {
     }, []);
 
     const slow = (word) => {
-        let i = 0;
+
         const typeNextCharacter = () => {
-            if (i < word.length) {
-                let words = word.slice(0, i + 1)
-                setCharacters([...words]);
-                i++;
-                setTimeout(typeNextCharacter, 500);
-            }
+            setCharacters((prevChar) => {
+                const i = prevChar.length;
+                if (i < word.length) {
+                    setTimeout(typeNextCharacter, 500);
+                    return [...prevChar, word[i]];
+                } else {
+                    return prevChar;
+                }
+            });
         };
 
         typeNextCharacter(); // Start the typing effect

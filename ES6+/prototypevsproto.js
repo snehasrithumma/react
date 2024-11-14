@@ -15,3 +15,24 @@ console.log('Animal vs Function', Animal.__proto__, Animal.prototype, Function.p
 console.log('generic =>Animal----', generic.__proto__, Animal.prototype, generic.__proto__ === Animal.prototype)
 
 console.log('Animal vs Dog', Dog.__proto__, Animal, Dog.__proto__ === Animal)
+
+const person = {
+    name: 'Alice',
+    greet: function() {
+      console.log(this.name);
+    }
+  };
+  const sneha = {
+      name:'Sneha'
+  }
+  const greetFn = person.greet.bind(sneha);
+  greetFn();
+  
+  person.greet()
+  
+  person.greet.apply(sneha);
+  console.log(person.__proto__ === Object.prototype)
+  console.log(person.__proto__ === Object.__proto__.__proto__)
+  console.log(Object.prototype === Object.__proto__.__proto__)
+  console.log(person.__proto__ === person.prototype)
+
