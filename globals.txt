@@ -1,0 +1,34 @@
+Why you're getting '__IS_DEV__' is not defined. in VS Code
+    1. Webpack DefinePlugin replaces variables like __IS_DEV__ at build time, not at dev-time or runtime.
+
+    2. But your editor (VS Code) or linter (ESLint) doesn’t know that __IS_DEV__ will be defined later.
+
+    3. So it flags it as an undefined global variable.
+
+fix it options:
+
+✅ Option 1: Declare __IS_DEV__ as a global variable (Best for plain JS)
+In your JavaScript (or TypeScript) code, add a global declaration comment at the top of your file:
+
+/* global __IS_DEV__ */
+
+if (__IS_DEV__) {
+  console.log('Dev mode!');
+}
+✅ This tells VS Code and linters: “I know this is global, don’t warn me.”
+
+✅ Option 2: Define it in your ESLint config
+If you're using ESLint, add this to .eslintrc:
+
+{
+  "globals": {
+    "__IS_DEV__": "readonly"
+  }
+}
+This suppresses the “not defined” error across all files.
+
+✅ Option 3: Create a globals.d.ts file (for TypeScript)
+If you're using TypeScript, create a globals.d.ts in your project root:
+
+declare const __IS_DEV__: boolean;
+This will tell TypeScript and your editor about the global variable Webpack is injecting.

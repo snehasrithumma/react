@@ -1,9 +1,9 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
+const webpack = require('webpack');
 
-module.exports = (env) => {
-    return merge(common, {
+module.exports = merge(common, {
         mode: 'development',
         devServer: {
             static: {
@@ -13,5 +13,10 @@ module.exports = (env) => {
             port: 9000,
             historyApiFallback: true,
         },
+        plugins: [
+            new webpack.DefinePlugin({
+              'process.env.NODE_ENV': JSON.stringify('development'),
+              '__IS_DEV__': JSON.stringify(true),
+            }),
+          ],
     });
-}

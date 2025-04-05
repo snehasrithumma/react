@@ -24,7 +24,7 @@ async function getUsers2(names) {
         try {
             let response = await fetch(`https://api.github.com/users/${user}`);
             if (response.ok) {
-                let data = await response.json();
+                let data = response.json();
                 info.push(data);
             } else {
                 info.push(null);

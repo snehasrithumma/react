@@ -4,6 +4,7 @@ const common = require('./webpack.common.js');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -39,5 +40,9 @@ module.exports = merge(common, {
             filename: '[name].[contenthash].css',
             chunkFilename: "[id].[contenthash].css",
         }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('production'),
+            '__IS_DEV__': JSON.stringify(false),
+          }),
     ],
 });

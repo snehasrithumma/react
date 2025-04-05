@@ -6,22 +6,22 @@ console.log(typeof x === 'object' && !Array.isArray(x) && x !== null)
 
 // Deep Equality Check
 
-const obj1 = { a: 1, b: { c: { 'red': 0 } } };
-const obj2 = { a: 1, b: { c: { 'red': 0 } } };
+const value = { a: 1, b: { c: { 'red': 0 } } };
+const object = { a: 1, b: { c: { 'red': 0 } } };
 
-function deep(obj1, obj2) {
-    if (obj1 === obj2) { return true };
-    if (obj1 == null || obj2 == null) { return false };
-    if (typeof (obj1) !== 'object' || typeof (obj2) !== 'object') { return false; }
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
+function deep(object1, object2) {
+    if (object1 === object2) { return true };
+    if (object1 == null || object2 == null) { return false };
+    if (typeof (object1) !== 'object' || typeof (object2) !== 'object') { return false; }
+    const keys1 = Object.keys(object1);
+    const keys2 = Object.keys(object2);
     if (keys1.length !== keys2.length) { return false; }
 
     for (let key of keys1) {
-        if (!keys2.includes(key) || !deep(obj1[key], obj2[key])) {
+        if (!keys2.includes(key) || !deep(object1[key], object2[key])) {
             return false;
         }
     }
     return true
 }
-console.log(deep(obj1, obj2))
+console.log(deep(value, object))

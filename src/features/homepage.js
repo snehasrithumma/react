@@ -10,6 +10,8 @@ import RegularList from '../Lists/List';
 import SmallListItem from '../Lists/smallList';
 import LargeListItem from '../Lists/LargeListItems';
 
+/* global __IS_DEV__ */
+
 const listItems = [
     {
       "postId": 1,
@@ -196,11 +198,10 @@ export default function Home() {
     }
 
     useEffect(() => {
-        async function addPost() {
+        (async () => {
             const newPost = await createPosts({ title: 'post 3', body: 'This is post 3' });
             setPosts((oldPosts) => [...oldPosts, newPost]);
-        }
-        addPost();
+        })();
         lama()
     }, []);
 
