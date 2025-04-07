@@ -112,9 +112,12 @@ static.directory: Directory to serve static files from (public).
 compress: Enables gzip compression for everything served.
 port: Port number for the dev server.
 historyApiFallback: Fallback to index.html for Single Page Applications (SPA) to handle routing via client-side code.
-Mode
-javascript
-Copy code
+Mode {
     mode: 'development',
 };
 mode: Mode in which Webpack should run, which can be 'development', 'production', or 'none'. This affects optimizations and performance.
+
+Prefetching/Preloading modules
+import(/* webpackPrefetch: true */ './path/to/LoginModal.js')
+
+import(/* webpackPreload: true */ 'ChartingLibrary');
