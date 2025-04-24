@@ -1,69 +1,57 @@
 .mainContent {
-    display: block;
-    margin: 10px;
-}
-
-.element {
-    width: 100%;
-    margin: 1%;
-    padding: 1%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
-#root>div>div.mainContent>form {
-    width: 20%;
+form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    row-gap: 12px;
+}
+
+label {
+font-size: 12px;
+}
+  
+input,
+textarea {
+display: block;
 }
 
 button[type="submit"] {
     margin: 10px;
     background-color: rgb(86, 161, 93);
-    /* A nice green color */
     color: white;
     border: none;
     height: 40px;
-    /* Increased height for better touch targets */
     padding: 0 15px;
-    /* Horizontal padding for better spacing */
     cursor: pointer;
     text-align: center;
     border-radius: 4px;
-    /* Rounded corners for a modern look */
     font-size: 16px;
-    /* Adjusted font size for readability */
     font-weight: bold;
-    /* Bold text for emphasis */
     transition: background-color 0.3s;
-    /* Smooth transition for hover effect */
 }
 
 button[type="submit"]:hover {
     background-color: rgb(76, 141, 77);
-    /* Slightly darker green on hover */
 }
 
 
 button[type="cancel"] {
     margin: 10px;
     background-color: rgb(187, 69, 69);
-    /* A nice green color */
     color: white;
     border: none;
     height: 40px;
-    /* Increased height for better touch targets */
     padding: 0 15px;
-    /* Horizontal padding for better spacing */
     cursor: pointer;
     text-align: center;
     border-radius: 4px;
-    /* Rounded corners for a modern look */
     font-size: 16px;
-    /* Adjusted font size for readability */
     font-weight: bold;
-    /* Bold text for emphasis */
     transition: background-color 0.3s;
-    /* Smooth transition for hover effect */
 }
